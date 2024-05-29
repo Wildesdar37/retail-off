@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<libraryInfos>
+    <libraryInfo home="/Library/Java/JavaVirtualMachines/jdk-11.0.17.jdk/Contents/Home" version="11.0.17"/>
+    <libraryInfo home="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home" version="1.8.0_292">
+        <bootpath>
+            <entry path="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/lib/resources.jar"/>
+            <entry path="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/lib/rt.jar"/>
+            <entry path="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/lib/sunrsasign.jar"/>
+            <entry path="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/lib/jsse.jar"/>
+            <entry path="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/lib/jce.jar"/>
+            <entry path="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/lib/charsets.jar"/>
+            <entry path="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/lib/jfr.jar"/>
+            <entry path="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/classes"/>
+        </bootpath>
+        <extensionDirs>
+            <entry path="/Users/krlosaren/Library/Java/Extensions"/>
+            <entry path="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/lib/ext"/>
+            <entry path="/Library/Java/Extensions"/>
+            <entry path="/Network/Library/Java/Extensions"/>
+            <entry path="/System/Library/Java/Extensions"/>
+            <entry path="/usr/lib/java"/>
+        </extensionDirs>
+        <endorsedDirs>
+            <entry path="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/lib/endorsed"/>
+        </endorsedDirs>
+    </libraryInfo>
+    <libraryInfo home="/Library/Java/JavaVirtualMachines/temurin-11.jdk/Contents/Home" version="11.0.17"/>
+    <libraryInfo home="/Users/krlosaren/Library/Java/JavaVirtualMachines/azul-17.0.5/Contents/Home" version="17.0.5"/>
+    <libraryInfo home="/Library/Java/JavaVirtualMachines/jdk-19.jdk/Contents/Home" version="19.0.1"/>
+    <libraryInfo home="/Users/krlosaren/Library/Java/JavaVirtualMachines/openjdk-19.0.1/Contents/Home" version="19.0.1"/>
+    <libraryInfo home="/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home" version="17.0.7"/>
+    <libraryInfo home="/Library/Java/JavaVirtualMachines/jdk-17.0.5.jdk/Contents/Home" version="17.0.5"/>
+    <libraryInfo home="/Users/krlosaren/Library/Java/JavaVirtualMachines/azul-16.0.2/Contents/Home" version="16.0.2"/>
+</libraryInfos>

@@ -3,8 +3,8 @@ pipeline {
 
     tools {
         // Instalar Maven desde las herramientas globales de Jenkins
-        maven "Maven 3.6.3"
-        jdk "jdk-11"
+        maven 'Maven 3.6.3'
+        jdk 'jdk-11'
     }
 
     stages {
@@ -38,6 +38,7 @@ pipeline {
                 }
             }
         }
+    }
 
     post {
         success {
@@ -47,4 +48,4 @@ pipeline {
             echo 'Build or tests failed.'
         }
     }
-    }
+}

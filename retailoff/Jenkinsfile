@@ -15,28 +15,29 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build and Test') {
             steps {
-                // Limpiar y construir el proyecto Maven
-                sh 'mvn clean package'
-            }
-        }
+                // Cambiar al directorio retailoff antes de ejecutar comandos
+                dir('retailoff') {
+                    // Limpiar y construir el proyecto Maven
+                    sh 'mvn clean package'
 
-        stage('Test') {
-            steps {
-                // Ejecutar los tests del proyecto Maven
-                sh 'mvn test'
+                    // Ejecutar los tests del proyecto Maven
+                    sh 'mvn test'
+                }
             }
         }
 
         stage('Archive Artifacts') {
             steps {
-                // Archivar los artefactos de construcción y resultados de pruebas
-                archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
-                junit '**/target/surefire-reports/*.xml'
+                // Cambiar al directorio retailoff para archivar artefactos
+                dir('retailoff') {
+                    // Archivar los artefactos de construcción y resultados de pruebas
+                    archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
+                    junit '**/target/surefire-reports/*.xml'
+                }
             }
         }
-    }
 
     post {
         success {
@@ -46,4 +47,4 @@ pipeline {
             echo 'Build or tests failed.'
         }
     }
-}
+    }

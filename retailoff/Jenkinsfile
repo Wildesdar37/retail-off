@@ -37,15 +37,19 @@ pipeline {
 
         stage('Publish to Artifactory') {
             steps {
-                dir('retailoff') {
-                    script {
-                        jf 'rt config --interactive=false --url=http://localhost:8081/artifactory --user=admin --password=xuoE8xRxn4U= --server-id=default'
-                        jf 'rt u target/retailoff-0.0.1-SNAPSHOT.jar libs-release-local/'
-                    }
+                script {
+                        def server = Artifactory.server('MyJFrog') // ID del servidor Artifactory en Jenkins
+                        def rtMaven = Artifactory.newMavenBuild()
+                        rtMaven.tool = 'Maven 3.6.3' // Nombre de la herramienta Maven configurada en Jenkins
+                        rtMaven.deployer releaseRepo: "${ARTIFACTORY_REPO}", snapshotRepo: "${ARTIFACTORY_REPO}", server: server
+                        rtMaven.resolver releaseRepo: "${ARTIFACTORY_REPO}", snapshotRepo: "${ARTIFACTORY_REPO}", server: server
+
+                        rtMaven.run pom: 'pom.xml', goals: 'clean install'
+
+                        server.publishBuildInfo(rtMaven.publishBuildInfo())
                 }
             }
         }
-    }
 
     post {
         success {
@@ -55,4 +59,4 @@ pipeline {
             echo 'Build or tests failed.'
         }
     }
-}
+    }

@@ -1,4 +1,3 @@
-@Library('artifactory') _
 pipeline {
     agent any
 
@@ -6,6 +5,7 @@ pipeline {
         // Instalar Maven desde las herramientas globales de Jenkins
         maven 'Maven 3.6.3'
         jdk 'jdk-11'
+        jfrog 'jfrog-cli'
     }
 
     environment {
@@ -40,15 +40,7 @@ pipeline {
             steps {
                 dir('retailoff') {
                     script {
-                        def server = Artifactory.server('artifactory-server-id') // ID del servidor Artifactory en Jenkins
-                        def rtMaven = Artifactory.newMavenBuild()
-                        rtMaven.tool = 'Maven 3.6.3' // Nombre de la herramienta Maven configurada en Jenkins
-                        rtMaven.deployer releaseRepo: "${ARTIFACTORY_REPO}", snapshotRepo: "${ARTIFACTORY_REPO}", server: server
-                        rtMaven.resolver releaseRepo: "${ARTIFACTORY_REPO}", snapshotRepo: "${ARTIFACTORY_REPO}", server: server
-
-                        rtMaven.run pom: 'pom.xml', goals: 'clean install'
-
-                        server.publishBuildInfo(rtMaven.publishBuildInfo())
+                        jf 'rt u target/ retailoff-dev/'
                     }
                 }
             }

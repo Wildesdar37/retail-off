@@ -11,7 +11,7 @@ pipeline {
     environment {
         ARTIFACTORY_URL = 'http://localhost:8081/artifactory'
         ARTIFACTORY_REPO = 'retailoff-dev'
-        ARTIFACTORY_CREDENTIALS = 'artifactory-credentials-id' // ID de las credenciales de Artifactory en Jenkins
+        ARTIFACTORY_CREDENTIALS = 'jfrog-artifactory-id' // ID de las credenciales de Artifactory en Jenkins
     }
 
     stages {

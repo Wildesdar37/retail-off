@@ -7,6 +7,12 @@ pipeline {
         jdk 'jdk-11'
     }
 
+    environment {
+        ARTIFACTORY_URL = 'http://localhost:8081/artifactory'
+        ARTIFACTORY_REPO = 'libs-release-local'
+        ARTIFACTORY_CREDENTIALS = 'artifactory-credentials-id' // ID de las credenciales de Artifactory en Jenkins
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -28,6 +34,15 @@ pipeline {
             }
         }
 
+        stage('Deploy') {
+            steps {
+                dir('retailoff') {
+                    // Desplegar la aplicación localmente (puedes ajustar este comando según tus necesidades)
+                    sh 'cp target/*.jar /retailoff/target/'
+                }
+            }
+        }
+
         stage('Archive Artifacts') {
             steps {
                 // Cambiar al directorio retailoff para archivar artefactos
@@ -35,6 +50,24 @@ pipeline {
                     // Archivar los artefactos de construcción y resultados de pruebas
                     archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
                     junit '**/target/surefire-reports/*.xml'
+                }
+            }
+        }
+
+        stage('Publish to Artifactory') {
+            steps {
+                dir('retailoff') {
+                    script {
+                        def server = Artifactory.server('artifactory-server-id') // ID del servidor Artifactory en Jenkins
+                        def rtMaven = Artifactory.newMavenBuild()
+                        rtMaven.tool = 'Maven 3.6.3' // Nombre de la herramienta Maven configurada en Jenkins
+                        rtMaven.deployer releaseRepo: "${ARTIFACTORY_REPO}", snapshotRepo: "${ARTIFACTORY_REPO}", server: server
+                        rtMaven.resolver releaseRepo: "${ARTIFACTORY_REPO}", snapshotRepo: "${ARTIFACTORY_REPO}", server: server
+
+                        rtMaven.run pom: 'pom.xml', goals: 'clean install'
+
+                        server.publishBuildInfo(rtMaven.publishBuildInfo())
+                    }
                 }
             }
         }

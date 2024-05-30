@@ -11,4 +11,4 @@ RUN echo "deb [arch=$(dpkg --print-architecture) \
 RUN apt-get update && apt-get install -y docker-ce-cli \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 USER jenkins
-RUN jenkins-plugin-cli --plugins "blueocean docker-workflow"
+RUN jenkins-plugin-cli --plugins "blueocean docker-workflow maven-plugin jdk-tool jfrog"

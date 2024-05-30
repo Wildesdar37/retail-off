@@ -3,6 +3,7 @@
 volumes:
   jenkins-volume: {}
   jenkins-docker-certs: {}
+  jfrog-volume: {}
 
 services:
   
@@ -23,3 +24,18 @@ services:
       - DOCKER_HOST=tcp://docker:2376
       - DOCKER_CERT_PATH=/certs/client
       - DOCKER_TLS_VERIFY=1
+  
+  jfrog:
+    image: releases-docker.jfrog.io/jfrog/artifactory-oss:7.77.5
+    ports:
+      - 8081:8081
+      - 8082:8082
+    container_name: jfrog_artifactory
+    volumes:
+      - jfrog-volume:/var/opt/jfrog/artifactory
+    restart: always
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 32000
+        hard: 40000

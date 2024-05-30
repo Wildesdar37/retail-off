@@ -35,12 +35,11 @@ pipeline {
             }
         }
 
-
         stage('Publish to Artifactory') {
             steps {
                 dir('retailoff') {
                     script {
-                        jf 'rt u target/ retailoff-dev/'
+                        jf 'rt build-publish'
                     }
                 }
             }

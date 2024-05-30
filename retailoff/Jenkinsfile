@@ -34,14 +34,6 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
-            steps {
-                dir('retailoff') {
-                    // Desplegar la aplicación localmente (puedes ajustar este comando según tus necesidades)
-                    sh 'cp target/*.jar /retailoff/target/'
-                }
-            }
-        }
 
         stage('Publish to Artifactory') {
             steps {

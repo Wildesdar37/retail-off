@@ -43,17 +43,6 @@ pipeline {
             }
         }
 
-        stage('Archive Artifacts') {
-            steps {
-                // Cambiar al directorio retailoff para archivar artefactos
-                dir('retailoff') {
-                    // Archivar los artefactos de construcción y resultados de pruebas
-                    archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
-                    junit '**/target/surefire-reports/*.xml'
-                }
-            }
-        }
-
         stage('Publish to Artifactory') {
             steps {
                 dir('retailoff') {

@@ -9,7 +9,7 @@ pipeline {
 
     environment {
         ARTIFACTORY_URL = 'http://localhost:8081/artifactory'
-        ARTIFACTORY_REPO = 'libs-release-local'
+        ARTIFACTORY_REPO = 'retailoff-dev'
         ARTIFACTORY_CREDENTIALS = 'artifactory-credentials-id' // ID de las credenciales de Artifactory en Jenkins
     }
 

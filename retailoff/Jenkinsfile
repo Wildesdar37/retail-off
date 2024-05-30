@@ -1,3 +1,4 @@
+@Library('artifactory') _
 pipeline {
     agent any
 

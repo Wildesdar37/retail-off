@@ -37,19 +37,22 @@ pipeline {
 
         stage('Publish to Artifactory') {
             steps {
-                script {
-                        def server = Artifactory.server('MyJFrog') // ID del servidor Artifactory en Jenkins
+                dir('retailoff') {
+                    script {
+                        def server = Artifactory.server('MyJFron') // ID del servidor Artifactory en Jenkins
                         def rtMaven = Artifactory.newMavenBuild()
                         rtMaven.tool = 'Maven 3.6.3' // Nombre de la herramienta Maven configurada en Jenkins
                         rtMaven.deployer releaseRepo: "${ARTIFACTORY_REPO}", snapshotRepo: "${ARTIFACTORY_REPO}", server: server
                         rtMaven.resolver releaseRepo: "${ARTIFACTORY_REPO}", snapshotRepo: "${ARTIFACTORY_REPO}", server: server
 
                         rtMaven.run pom: 'pom.xml', goals: 'clean install'
-
+                        
                         server.publishBuildInfo(rtMaven.publishBuildInfo())
+                    }
                 }
             }
         }
+    }
 
     post {
         success {

@@ -47,7 +47,7 @@ pipeline {
                 dir('retailoff') {
                     script {
                         sh 'echo ' + 'Publish to Artifactory'
-                        jf 'c add --url=http://localhost:8082/ui/native/retailoff/ --user=$ARTIFACTORY_CREDS_USR --password=$ARTIFACTORY_CREDS_PSW --interactive=false'
+                        jf 'c add --url=http://jfrog_artifactory/ui/native/retailoff/ --user=$ARTIFACTORY_CREDS_USR --password=$ARTIFACTORY_CREDS_PSW --interactive=false'
                         jf 'rt u ./target/retailoff-0.0.1-SNAPSHOT.jar /retailoff'
                     }
                 }

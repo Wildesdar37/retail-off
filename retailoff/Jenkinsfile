@@ -9,7 +9,6 @@ pipeline {
     }
 
     environment {
-        ARTIFACTORY_URL = 'http://localhost:8081/artifactory'
         ARTIFACTORY_REPO = 'retailoff-dev'
         ARTIFACTORY_CREDENTIALS = 'jfrog-artifactory-id' // ID de las credenciales de Artifactory en Jenkins
     }
@@ -26,7 +25,7 @@ pipeline {
             steps {
                 // Cambiar al directorio retailoff antes de ejecutar comandos
                 dir('retailoff') {
-                    // Limpiar y construir el proyecto Maven
+                    // Limpiar y construir el proyecto Maven-
                     sh 'mvn clean package'
 
                     // Ejecutar los tests del proyecto Maven
@@ -42,8 +41,7 @@ pipeline {
                         sh "echo " + 'Publish to Artifactory'
                     }
                 }
-            }
-        }
+            }        }
     }
 
     post {

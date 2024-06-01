@@ -54,36 +54,14 @@ pipeline {
                 jf 'rt ping'
 
                 // Create a file and upload it to a repository named 'my-repo' in Artifactory
-                sh 'touch test-file'
-                jf 'rt u test-file retailoff/'
+                jf 'rt u target/retailoff-0.0.1-SNAPSHOT.jar retailoff/'
 
                 // Publish the build-info to Artifactory.
                 jf 'rt bp'
 
-                // Download the test-file
-                jf 'rt dl retailoff/test-file'
             }
         }
 
-        // stage('Configure JFrog CLI') {
-        //     steps {
-        //         script {
-        //             sh 'echo Configure JFrog CLI'
-        //             sh 'jfrog rt config add --url=$ARTIFACTORY_URL --user=$ARTIFACTORY_CREDS_USR --password=$ARTIFACTORY_CREDS_PSW --interactive=false'
-        //         }
-        //     }
-        // }
-
-    // stage('Publish to Artifactory') {
-    //     steps {
-    //         dir('retailoff') {
-    //             script {
-    //                 sh 'echo Publish to Artifactory'
-    //                 sh 'jfrog rt u "target/retailoff-0.0.1-SNAPSHOT.jar" "$ARTIFACTORY_REPO/jenkins/artifactory/"'
-    //             }
-    //         }
-    //     }
-    // }
     }
 
     post {

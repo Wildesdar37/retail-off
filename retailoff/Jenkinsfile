@@ -50,12 +50,13 @@ pipeline {
             }
         }
 
-    post {
-        success {
-            echo 'Build and tests were successful!'
-        }
-        failure {
-            echo 'Build or tests failed.'
+        post {
+            success {
+                echo 'Build and tests were successful!'
+            }
+            failure {
+                echo 'Build or tests failed.'
+            }
         }
     }
-    }
+}

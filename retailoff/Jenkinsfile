@@ -21,15 +21,21 @@ pipeline {
             }
         }
 
-        stage('Build and Test') {
+        stage('Test') {
             steps {
                 // Cambiar al directorio retailoff antes de ejecutar comandos
                 dir('retailoff') {
-                    // Limpiar y construir el proyecto Maven-
-                    sh 'mvn clean package'
-
                     // Ejecutar los tests del proyecto Maven
                     sh 'mvn test'
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                // Cambiar al directorio retailoff antes de ejecutar comandos
+                dir('retailoff') {
+                    // Limpiar y construir el proyecto Maven
+                    sh 'mvn clean package'
                 }
             }
         }
@@ -38,11 +44,11 @@ pipeline {
             steps {
                 dir('retailoff') {
                     script {
-                        sh "echo " + 'Publish to Artifactory'
+                        sh 'echo ' + 'Publish to Artifactory'
                     }
                 }
-            }        }
-    }
+            }
+        }
 
     post {
         success {
@@ -52,4 +58,4 @@ pipeline {
             echo 'Build or tests failed.'
         }
     }
-}
+    }

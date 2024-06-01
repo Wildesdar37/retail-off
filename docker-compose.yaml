@@ -1,13 +1,5 @@
-
-
-volumes:
-  jenkins-volume: {}
-  jenkins-docker-certs: {}
-  jfrog-volume: {}
-  pgdata: {}
-
+version: '3'
 services:
-  
   jenkins:
     build:
       context: .
@@ -29,16 +21,16 @@ services:
       - eval_6_networks
 
   postgres:
-      image: postgres:13
-      container_name: artifactory_postgres
-      environment:
-        POSTGRES_USER: artifactory
-        POSTGRES_PASSWORD: password
-        POSTGRES_DB: artifactory
-      volumes:
-        - pgdata:/var/lib/postgresql/data
-      networks:
-        - eval_6_networks
+    image: postgres:13
+    container_name: artifactory_postgres
+    environment:
+      POSTGRES_USER: artifactory
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: artifactory
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - eval_6_networks
 
   jfrog_artifactory:
     image: releases-docker.jfrog.io/jfrog/artifactory-oss:7.77.5
@@ -47,7 +39,7 @@ services:
       - 8082:8082
     container_name: jfrog_artifactory
     environment:
-      - JAVA_OPTIONS=-Dartifactory.jdbc.driver=org.postgresql.Driver -Dartifactory.jdbc.url=jdbc:postgresql://artifactory_postgres:5432/artifactory -Dartifactory.jdbc.user=artifactory -Dartifactory.jdbc.password=password=value
+      - JAVA_OPTIONS=-Dartifactory.jdbc.driver=org.postgresql.Driver -Dartifactory.jdbc.url=jdbc:postgresql://artifactory_postgres:5432/artifactory -Dartifactory.jdbc.user=artifactory -Dartifactory.jdbc.password=password
     depends_on:
       - postgres
     volumes:
@@ -63,3 +55,9 @@ services:
 
 networks:
   eval_6_networks: {}
+
+volumes:
+  jenkins-volume: {}
+  jenkins-docker-certs: {}
+  jfrog-volume: {}
+  pgdata: {}

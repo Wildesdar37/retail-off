@@ -5,11 +5,10 @@ pipeline {
         // Instalar Maven desde las herramientas globales de Jenkins
         maven 'Maven 3.6.3'
         jdk 'jdk-11'
-        jfrog 'jfrog-cli'
     }
 
     environment {
-        ARTIFACTORY_URL = 'http://localhost:8082/artifactory/retailoff/'
+        ARTIFACTORY_URL = 'http://jfrog_artifactory:8082/artifactory'
         ARTIFACTORY_REPO = 'retailoff-dev'
         ARTIFACTORY_CREDS = credentials('artifact-creds') // ID de las credenciales de Artifactory en Jenkins
     }
@@ -42,13 +41,33 @@ pipeline {
             }
         }
 
+        stage('Install JFrog CLI') {
+            steps {
+                // Descargar e instalar JFrog CLI si no está instalada
+                sh '''
+                if ! [ -x "$(command -v jfrog)" ]; then
+                    curl -fL https://getcli.jfrog.io | sh
+                    sudo mv jfrog /usr/local/bin/
+                fi
+                '''
+            }
+        }
+
+        stage('Configure JFrog CLI') {
+            steps {
+                script {
+                    sh 'echo Configure JFrog CLI'
+                    sh 'jfrog rt config add --url=$ARTIFACTORY_URL --user=$ARTIFACTORY_CREDS_USR --password=$ARTIFACTORY_CREDS_PSW --interactive=false'
+                }
+            }
+        }
+
         stage('Publish to Artifactory') {
             steps {
                 dir('retailoff') {
                     script {
-                        sh 'echo ' + 'Publish to Artifactory'
-                        jf 'c add --url=http://jfrog_artifactory/ui/native/retailoff/ --user=$ARTIFACTORY_CREDS_USR --password=$ARTIFACTORY_CREDS_PSW --interactive=false'
-                        jf 'rt u ./target/retailoff-0.0.1-SNAPSHOT.jar /retailoff'
+                        sh 'echo Publish to Artifactory'
+                        sh 'jfrog rt u "target/retailoff-0.0.1-SNAPSHOT.jar" "$ARTIFACTORY_REPO/jenkins/artifactory/"'
                     }
                 }
             }

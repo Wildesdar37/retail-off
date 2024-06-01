@@ -11,7 +11,7 @@ pipeline {
     environment {
         ARTIFACTORY_URL = 'http://localhost:8082/artifactory/retailoff/'
         ARTIFACTORY_REPO = 'retailoff-dev'
-        ARTIFACTORY_CREDS = credentials('your-credentials-id') // ID de las credenciales de Artifactory en Jenkins
+        ARTIFACTORY_CREDS = credentials('artifact-creds') // ID de las credenciales de Artifactory en Jenkins
     }
 
     stages {
@@ -47,7 +47,7 @@ pipeline {
                 dir('retailoff') {
                     script {
                         sh 'echo ' + 'Publish to Artifactory'
-                        sh 'jfrog rt config --url=http://localhost:8082/artifactory/retailoff/ --user=$ARTIFACTORY_CREDS_USR --password=$ARTIFACTORY_CREDS_PSW'
+                        sh 'jfrog rt config --url=http://localhost:8082/artifactory/retailoff/git --user=$ARTIFACTORY_CREDS_USR --password=$ARTIFACTORY_CREDS_PSW'
                         sh 'jfrog rt u "target/retailoff-0.0.1-SNAPSHOT.jar" "/jenkins/artifactory"'
                     }
                 }
@@ -57,7 +57,9 @@ pipeline {
 
     post {
         always {
-            sh 'jfrog rt config --url=http://localhost:8082/artifactory/retailoff/ --user=$ARTIFACTORY_CREDS_USR --password=$ARTIFACTORY_CREDS_PSW --interactive=false --artifactory-id=retailoff --delete'
+            script {
+                sh 'jfrog rt config --url=http://localhost:8082/artifactory/retailoff/ --user=$ARTIFACTORY_CREDS_USR --password=$ARTIFACTORY_CREDS_PSW --interactive=false --artifactory-id=retailoff --delete'
+            }
         }
         success {
             echo 'Build and tests were successful!'

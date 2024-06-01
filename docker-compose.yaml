@@ -26,31 +26,31 @@ services:
       - DOCKER_CERT_PATH=/certs/client
       - DOCKER_TLS_VERIFY=1
 
-  # postgres:
-  #     image: postgres:13
-  #     container_name: artifactory_postgres
-  #     environment:
-  #       POSTGRES_USER: artifactory
-  #       POSTGRES_PASSWORD: password
-  #       POSTGRES_DB: artifactory
-  #     volumes:
-  #       - pgdata:/var/lib/postgresql/data
+  postgres:
+      image: postgres:13
+      container_name: artifactory_postgres
+      environment:
+        POSTGRES_USER: artifactory
+        POSTGRES_PASSWORD: password
+        POSTGRES_DB: artifactory
+      volumes:
+        - pgdata:/var/lib/postgresql/data
 
-  # jfrog_artifactory:
-  #   image: releases-docker.jfrog.io/jfrog/artifactory-oss:7.77.5
-  #   ports:
-  #     - 8081:8081
-  #     - 8082:8082
-  #   container_name: jfrog_artifactory
-  #   environment:
-  #     - JAVA_OPTIONS=-Dartifactory.jdbc.driver=org.postgresql.Driver -Dartifactory.jdbc.url=jdbc:postgresql://artifactory_postgres:5432/artifactory -Dartifactory.jdbc.user=artifactory -Dartifactory.jdbc.password=password=value
-  #   depends_on:
-  #     - postgres
-  #   volumes:
-  #     - jfrog-volume:/var/opt/jfrog/artifactory
-  #   restart: always
-  #   ulimits:
-  #     nproc: 65535
-  #     nofile:
-  #       soft: 32000
-  #       hard: 40000
+  jfrog_artifactory:
+    image: releases-docker.jfrog.io/jfrog/artifactory-oss:7.77.5
+    ports:
+      - 8081:8081
+      - 8082:8082
+    container_name: jfrog_artifactory
+    environment:
+      - JAVA_OPTIONS=-Dartifactory.jdbc.driver=org.postgresql.Driver -Dartifactory.jdbc.url=jdbc:postgresql://artifactory_postgres:5432/artifactory -Dartifactory.jdbc.user=artifactory -Dartifactory.jdbc.password=password=value
+    depends_on:
+      - postgres
+    volumes:
+      - jfrog-volume:/var/opt/jfrog/artifactory
+    restart: always
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 32000
+        hard: 40000

@@ -55,7 +55,7 @@ pipeline {
                     jf 'rt ping'
 
                     // Create a file and upload it to a repository  in Artifactory
-                    sh 'ls -lhart'
+                    sh 'ls -lhart ./target'
                     jf "rt u target/retailoff-0.0.1-SNAPSHOT.jar' 'retailoff/${BUILD_TAG}/'"
 
                     // Publish the build-info to Artifactory.

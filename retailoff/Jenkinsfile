@@ -56,11 +56,6 @@ pipeline {
     }
 
     post {
-        always {
-            script {
-                jf 'c add --url=http://localhost:8082/ui/native/retailoff/ --user=$ARTIFACTORY_CREDS_USR --password=$ARTIFACTORY_CREDS_PSW --interactive=false --artifactory-id=retailoff --delete'
-            }
-        }
         success {
             echo 'Build and tests were successful!'
         }

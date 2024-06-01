@@ -25,6 +25,8 @@ services:
       - DOCKER_HOST=tcp://docker:2376
       - DOCKER_CERT_PATH=/certs/client
       - DOCKER_TLS_VERIFY=1
+    networks:
+      - eval_6_networks
 
   postgres:
       image: postgres:13
@@ -35,6 +37,8 @@ services:
         POSTGRES_DB: artifactory
       volumes:
         - pgdata:/var/lib/postgresql/data
+      networks:
+        - eval_6_networks
 
   jfrog_artifactory:
     image: releases-docker.jfrog.io/jfrog/artifactory-oss:7.77.5
@@ -54,3 +58,8 @@ services:
       nofile:
         soft: 32000
         hard: 40000
+    networks:
+      - eval_6_networks
+
+networks:
+  eval_6_networks: {}
